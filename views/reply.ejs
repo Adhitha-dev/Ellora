@@ -1,0 +1,71 @@
+<%- include('partials/head') %>
+<%- include('partials/navbar') %>
+
+<div class='section'>
+		<div class="card">
+
+		<% try{ if(data.image) { %>
+		  <div class="card-image">
+			<figure class="image is-4by1">
+			  <img
+				src="<%= data.image %>"
+				alt="Placeholder image"
+			  />
+			</figure>
+		  </div>
+		  <% }}catch(e){} %>
+
+		  <div class="card-content">
+			<div class="content">
+				<p class='title'> <%= data.title %> </p>
+						<p class='subtitle mt-1'><%= data.username %>  </p>
+				<p class='title is-3 mt-6'><%= data.desc %><p>
+			</div>
+		  </div>
+		</div>
+</div>
+<div class='section' id='chatarea'>
+		<div class='box'>
+						<div class='columns is-multiline'> 
+						<% try{ %>
+						<% for(let reply of data.replies){ %>
+							<div class='column is-full'>
+									<article class="message is-primary is-medium">
+									  <div class="message-header">
+										<p><strong><%= reply.date.join(" ") %></strong></p>
+										<p><strong><%= reply.username %></strong></p>
+										<p><strong><%= reply.time.join(" ") %></strong></p>
+									  </div>
+									  <div class="message-body has-text-right reply" >
+										  <form method="post" action="/posts/<%=data._id%>/<%= reply.replyId %>">
+											  <button class="reply-close-btn" ><strong>&times;</strong></button>
+										  </form>
+										  <strong class="reply-text"><%= reply.reply %></strong>
+									  </div>
+									</article>
+							  </div>
+						 <% }} catch(e){%>
+						 <section class='section'>
+								 <p class='subtitle'><strong><br><br>nothing yet . . .<strong></p>
+						 </section>
+						 <%} %>
+						 </div>
+		</div>
+</div>
+<form method='post' action='/posts/<%= data._id %>/reply'>
+<div class='section box' id='chatbox'>
+		<div class="control">
+		  <textarea
+			class="textarea is-focused is-medium is-info"
+			placeholder="Tell me something?"
+			id="chatbox-textarea"
+			rows=1
+			cols=140
+			name='userReply'
+		  ></textarea>
+		</div>		
+		<button class='button is-medium mt-4 is-primary is-dark' id='chatbox-button'>Send</button>
+</div>
+</form>
+
+<%- include('partials/foot') %>

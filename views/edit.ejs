@@ -1,0 +1,30 @@
+<%- include('partials/head') %>
+<%- include('partials/navbar') %>
+
+<form method='post' action='/posts/<%= data.id %>?_method=PATCH' class='section is-large'>
+
+		<div class='field'>
+			<input type='text' id='username' name='username' class='input is-large' value="<%= data.username %>" required placeholder="Something new.." disabled>
+		</div>
+		<div class='field'>
+				<label for='user' class='title'> Title </label>
+		</div>
+		<div class='field'>
+				<div class='control is-large is-loading'>
+						<textarea class='is-large textarea'id='title' name='title' rows=1> <%= data.title %> </textarea>
+				</div>
+		</div>
+		<div class='field'>
+				<label for='desc' class='subtitle is-4'> Description</label>
+		</div>
+		<div class='field'>
+				<div class='control is-large is-loading'>
+						<textarea class='is-large textarea'id='desc' name='desc'> <%= data.desc %> </textarea>
+				</div>
+		</div>
+		<div class='field'>
+				<button class='button is-large is-primary is-dark is-fullwidth'>Save</button>
+		</div>
+</form>
+
+<%- include('partials/foot') %>

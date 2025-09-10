@@ -1,0 +1,28 @@
+<%- include('partials/head') %>
+<%- include('partials/navbar') %>
+
+		<section class="section is-large">
+		<div class='box'>
+		  <h1 class="title is-spaced">
+				<%= data.title %> 
+		  </h1>
+		  <h2 class="subtitle">
+				<%= data.desc %> 
+		  </h2>
+		</section>
+		</div>
+
+		<div class='buttons section'>
+				<form action='/posts/<%= data.id %>/edit'>
+				<div class='field'>
+						<button class="button is-primary is-large is-dark"><b>Edit</b></button>
+						</div>
+				</form>
+				<form action='/posts/<%= data.id %>?_method=DELETE' method='post'>
+				<div class='field'>
+						<button class="button is-danger is-large is-fullwidth is-dark"><b>Delete</b></button>
+				</div>
+				</form>
+		</div>
+
+<%- include('partials/foot') %>

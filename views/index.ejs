@@ -1,0 +1,47 @@
+<%- include('partials/head') %>
+
+		<body id='posts-body'>
+						<%- include('partials/navbar') %>
+
+				<div class='section is-narrow' id='feed-title'>
+				<h1 class='title is-1'> Feed </h1>
+				<p class='subtitle is-6'>See what's cookin</p>
+				</div>
+				<div class='section' id='posts-section'>
+				<div class='grid is-col-min-20 is-row-gap-0 is-col-gap-0'>
+						<% for(let post of data){ %>
+								<div class='cell p-3'>
+								<div class="card" id='card-body'>
+										<div class="card-header">
+														<div class='tags has-addons p-3 mx-5 mt-5 mb-0' id='reply'>
+																<span class='tag is-medium'><strong>Reply</strong></span>
+																<span class='tag is-medium is-info '><strong style="color: black;"><%= post.replyCount %></strong></span>
+														</div>
+														<div class='tags has-addons p-3 is-medium mx-5 mt-5' id='time'>
+																<span class='tag is-medium'><strong><%= post.time[0] %></strong></span>
+																<span class='tag is-primary is-medium '><strong style="color: black;"><%= post.time[1] %></strong></span>
+														</div>
+										</div>
+								  <div class="card-content">
+									<p class="title mb-5"[i]>
+									<%= post.title %>
+									</p>
+									<div class='columns'>
+									<p class="subtitle column mb-0" id='username'> <%= post.username %>  </p>
+									<div id='date'>
+											<p class="subtitle column has-text-right"> <%= post.date.join(" ")%> </p>
+									</div>
+									</div>
+								  </div>
+								  <footer class="card-footer">
+									<a class="is-dark m-3 card-footer-item button is-info is-medium" href='/posts/<%= post.id %>/reply'><b>Reply</b></a>
+									<a class="is-dark m-3 card-footer-item button is-primary is-medium" href='/posts/<%=post.id %>' ><b>View</b></a>
+								  </footer>
+								</div>
+				</div>
+			<% } %>
+				</div>
+				</div>
+
+<%- include('partials/foot') %>
+

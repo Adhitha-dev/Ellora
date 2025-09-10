@@ -1,0 +1,30 @@
+<%- include('partials/head') %>
+<%- include('partials/navbar') %>
+
+<section id='section is-large'>
+		<form action='/posts' method='post' class='section is-medium'>
+				<div class='field'>
+					<label for='username' class='title is-large'>Username</label>
+				</div>
+				<div class='field'>
+					<input type='text' id='username' name='username' class='input is-large' required placeholder="Something new..">
+				</div>
+				<div class='field'>
+						<label for='title' class='title is-large'>Title</label>
+				</div>
+				<div class='field'>
+						<input type='text' id='title' name='title' class='input is-large' required placeholder="Something catchy.."> 
+				</div>
+				<div class='field'>
+						<label for='desc' class='subtitle is-medium'><b>Description</b></label>
+				</div>
+				<div class='field'>
+						<textarea type='text' id='desc' name='desc' placeholder="Tell us more!" class='textarea' rows=10 required></textarea>
+				</div>
+				<div class='field'>
+						<button class='button is-large is-fullwidth is-info is-dark'><b>Submit</b></button>
+				</div>
+		</form>
+</section>
+
+<%- include('partials/foot') %>

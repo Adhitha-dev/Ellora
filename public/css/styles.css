@@ -1,0 +1,82 @@
+#count-text{
+		color: black;
+}
+.card-header{
+		display: flex;
+		justify-content: space-between;
+}
+#reply{
+		position: relative;
+		right: 13px;
+}
+#time{
+		position: relative;
+		left: 13px;
+}
+#feed-title{
+		position: relative;
+		top: 40px;
+		left: 15px;
+}
+#chatbox{
+		position: fixed;
+		bottom: 0;
+		width: 100vw;
+		padding: 20px;
+		margin-bottom: 80px;
+		display: flex;
+		justify-content: space-between;
+}
+#chatarea{
+		margin-bottom: 160px;
+		position: relative;
+		bottom: 60px;
+}
+#chatbox-button{
+		position: relative;
+		bottom: 10px;
+		height: 60px;
+}
+#chatbox-textarea{
+		position: relative;
+		top: 7px;
+}
+#foot-nav{
+		position: fixed;
+		bottom: 0;
+		margin: 0px;
+		width: 100%;
+}
+#tabs{
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+}
+#b1, #b2{
+		flex-grow: 1;
+}
+#mainbar{
+		display: flex;
+		justify-content: center;
+}
+
+#posts-section{
+		margin-bottom: 60px;
+}
+body{
+		background-color: #1a1a1a;
+}
+#card-body,.box,.card-content{
+		background-color: #0f0f0f;
+}
+.reply{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.reply-close-btn{
+	font-size: 25px;
+}
+.reply-close-btn:hover, .reply-close-btn:active{
+	color: darkred;
+}
