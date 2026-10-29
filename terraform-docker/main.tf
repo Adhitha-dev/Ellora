@@ -6,7 +6,9 @@ resource "docker_image" "ellora" {
     dockerfile = "Dockerfile"
   }
   triggers = {
-    dir_sha1 = sha1(join("", [for f in fileset("${path.module}/..", "{index.js,package.json,Dockerfile,views/**,public/**}") : filesha1("${path.module}/../${f}")]))
+    package_json = filemd5("${path.module}/../package.json")
+    dockerfile   = filemd5("${path.module}/../Dockerfile")
+    index_js     = filemd5("${path.module}/../index.js")
   }
 }
 
