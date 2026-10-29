@@ -5,9 +5,15 @@ variable "container_name" {
 }
 
 variable "image_name" {
-  description = "Docker image repository tag"
+  description = "Docker image repository name"
   type        = string
-  default     = "ellora-app:latest"
+  default     = "ellora-app"
+}
+
+variable "source_version" {
+  description = "Application source code version or Git commit hash"
+  type        = string
+  default     = "latest"
 }
 
 variable "app_port" {

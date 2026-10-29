@@ -128,8 +128,8 @@ EOF"
                             if docker info >/dev/null 2>&1; then
                                 echo "Docker daemon detected. Provisioning container via Terraform..."
                                 cd terraform-docker
-                                terraform init -input=false
-                                terraform apply -auto-approve -input=false -var="app_port=${params.APP_PORT}" -var="admin_user=${params.ADMIN_USER}"
+                                GIT_COMMIT_HASH=\$(git rev-parse --short HEAD)
+                                terraform apply -auto-approve -input=false -var="app_port=${params.APP_PORT}" -var="admin_user=${params.ADMIN_USER}" -var="source_version=\${GIT_COMMIT_HASH}"
                                 cd ..
                             else
                                 echo "Docker daemon not running locally. Falling back to background Node.js process..."

@@ -1,14 +1,12 @@
 # Build Ellora Docker image from application source
 resource "docker_image" "ellora" {
-  name = var.image_name
+  name = "${var.image_name}:${var.source_version}"
   build {
     context    = abspath("${path.module}/..")
     dockerfile = "Dockerfile"
   }
   triggers = {
-    package_json = filemd5("${path.module}/../package.json")
-    dockerfile   = filemd5("${path.module}/../Dockerfile")
-    index_js     = filemd5("${path.module}/../index.js")
+    source_version = var.source_version
   }
 }
 
