@@ -18,8 +18,8 @@ pipeline {
     }
 
     triggers {
-        // Automatically check GitHub every 5 minutes for new commits
-        pollSCM('H/5 * * * *')
+        // Automatically check GitHub every minute for new commits
+        pollSCM('* * * * *')
         // Automatically trigger on GitHub webhook push
         githubPush()
     }
