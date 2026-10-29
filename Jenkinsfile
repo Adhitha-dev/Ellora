@@ -11,9 +11,9 @@ pipeline {
     }
 
     environment {
+        PATH = "/home/adhitha/.nvm/versions/node/v24.21.0/bin:${env.PATH}"
         APP_NAME = 'ellora'
         NODE_ENV = 'production'
-        // Fallback default secrets for local testing if Jenkins credentials are not yet defined
         LOCAL_SESSION_SECRET = 'ellora-devops-test-session-secret'
     }
 
@@ -27,7 +27,6 @@ pipeline {
     options {
         timeout(time: 20, unit: 'MINUTES')
         buildDiscarder(logRotator(numToKeepStr: '10'))
-        ansiColor('xterm')
     }
 
     stages {
