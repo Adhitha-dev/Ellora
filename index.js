@@ -21,13 +21,19 @@ app.use(rateLimit({
 	max: 30
 }))
 app.use(session({
-	secret: process.env.SESSION_SECRET,
+	secret: process.env.SESSION_SECRET || 'ellora-dev-session-secret-key-2026',
 	resave: true,
 	saveUninitialized: true
 }))
 
 //configuring mongoose
-mongoose.connect(process.env.MONGO_URL)
+if (process.env.MONGO_URL) {
+	mongoose.connect(process.env.MONGO_URL)
+		.then(() => console.log('Connected to MongoDB'))
+		.catch(err => console.error('MongoDB connection error:', err));
+} else {
+	console.warn('Warning: MONGO_URL not provided. MongoDB connection skipped.');
+}
 const postSchema = mongoose.Schema({
 		username: String,
 		title: String,
@@ -46,6 +52,15 @@ const replySchema = mongoose.Schema({
 const Post = mongoose.model( 'Post',postSchema );
 
 //defining express routes
+
+// Health check endpoint for CI/CD and monitoring
+app.get('/health', (req, res) => {
+	res.status(200).json({
+		status: 'UP',
+		app: 'Ellora',
+		timestamp: new Date().toISOString()
+	});
+});
 
 // Root route
 app.get( '/', ( req,res ) => {
@@ -177,9 +192,13 @@ app.post( '/posts/:id/:replyId', (req,res) => {
 	}
 })
 //Express App listen port
-app.listen( process.env.PORT, () => {
-		console.log( "Connection Requested" );
-})
+const PORT = process.env.PORT || 3000;
+let server;
+if (process.env.NODE_ENV !== 'test') {
+	server = app.listen( PORT, () => {
+		console.log( `Ellora server listening on port ${PORT}` );
+	});
+}
 
 //Custom Functions
 function moment(){
@@ -195,3 +214,5 @@ function sanitizer(value){
 		allowedAttributes: {},
 	})
 }
+
+module.exports = { app, server, sanitizer, moment };

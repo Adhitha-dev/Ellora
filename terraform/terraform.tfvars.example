@@ -1,0 +1,10 @@
+# Example terraform.tfvars file
+# Copy this file to `terraform.tfvars` and customize your values
+
+resource_group_name = "rg-ellora-devops"
+location            = "East US"
+environment         = "production"
+vm_name             = "vm-ellora-prod"
+vm_size             = "Standard_B1s"
+admin_username      = "azureuser"
+ssh_public_key_path = "~/.ssh/id_rsa.pub"
