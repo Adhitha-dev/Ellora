@@ -11,7 +11,7 @@ pipeline {
     }
 
     environment {
-        PATH = "/home/adhitha/.nvm/versions/node/v24.21.0/bin:${env.PATH}"
+        PATH = "/home/adhitha/.local/bin:/home/adhitha/.nvm/versions/node/v24.21.0/bin:${env.PATH}"
         APP_NAME = 'ellora'
         NODE_ENV = 'production'
         LOCAL_SESSION_SECRET = 'ellora-devops-test-session-secret'
@@ -119,23 +119,30 @@ EOF"
                             """
                         }
                     } else {
-                        echo "=== Stage 5: Deploying in Local Test Environment ==="
+                        echo "=== Stage 5: Deploying with Terraform & Docker ==="
                         sh """
-                            # Stop any existing instance
+                            # Stop any existing process on target port
                             fuser -k ${params.APP_PORT}/tcp || true
 
-                            # Write local test .env file
-                            cat << 'EOF' > .env
+                            # Check if Docker daemon is running
+                            if docker info >/dev/null 2>&1; then
+                                echo "Docker daemon detected. Provisioning container via Terraform..."
+                                cd terraform-docker
+                                terraform init -input=false
+                                terraform apply -auto-approve -input=false -var="app_port=${params.APP_PORT}" -var="admin_user=${params.ADMIN_USER}"
+                                cd ..
+                            else
+                                echo "Docker daemon not running locally. Falling back to background Node.js process..."
+                                cat << 'EOF' > .env
 PORT=${params.APP_PORT}
 SESSION_SECRET=${env.LOCAL_SESSION_SECRET}
 MONGO_URL=
 ADMIN=${params.ADMIN_USER}
 NODE_ENV=test
 EOF
-
-                            # Launch local test instance in background (preserve process after build)
-                            JENKINS_NODE_COOKIE=dontKillMe nohup node index.js > app.log 2>&1 &
-                            echo "Local application instance launched."
+                                JENKINS_NODE_COOKIE=dontKillMe nohup node index.js > app.log 2>&1 &
+                                echo "Local application instance launched."
+                            fi
                         """
                     }
                 }
