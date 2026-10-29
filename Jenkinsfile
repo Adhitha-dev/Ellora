@@ -133,8 +133,8 @@ ADMIN=${params.ADMIN_USER}
 NODE_ENV=test
 EOF
 
-                            # Launch local test instance in background
-                            nohup node index.js > app.log 2>&1 &
+                            # Launch local test instance in background (preserve process after build)
+                            JENKINS_NODE_COOKIE=dontKillMe nohup node index.js > app.log 2>&1 &
                             echo "Local application instance launched."
                         """
                     }
